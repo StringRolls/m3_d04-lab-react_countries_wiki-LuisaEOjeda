@@ -2,8 +2,8 @@ import React from 'react';
 import  {Link} from 'react-router-dom'
 import ReactDOM from 'react-dom';
 
-export default function CountryDetails() {
-const { country, allCountries } = this.props;
+export default function CountryDetails({ country, allCountries }) {
+//const { country, allCountries } = this.props;
 
   return (
     <div className="col-7">
@@ -33,7 +33,7 @@ const { country, allCountries } = this.props;
               <ul>
                 {country.borders.map(border => (
                   <li key={country.alpha3Code}>
-                    <Link to={`/${border}`}>
+                    <Link to={`/${border}`+ `${country.alpha3Code}`}>
                       {allCountries.filter(
                         country => (country.alpha3Code === border)[0].name
                       )}
