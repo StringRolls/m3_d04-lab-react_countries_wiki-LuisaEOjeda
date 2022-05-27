@@ -1,9 +1,11 @@
 import React from 'react';
-import  {Link} from 'react-router-dom'
-import ReactDOM from 'react-dom';
+import  {Link, useParams} from 'react-router-dom'
 
-export default function CountryDetails({ country, allCountries }) {
-//const { country, allCountries } = this.props;
+export default function CountryDetails({ countries }) {
+ const {countryCode} = useParams()
+
+ const country = countries ? countries.find(country=>country.alpha3Code === countryCode) : {}
+ const borders = countries ? countries.filter(border=>country.borders.includes(border.alpha3Code)) : []
 
   return (
     <div className="col-7">
@@ -12,7 +14,7 @@ export default function CountryDetails({ country, allCountries }) {
         alt="country-flag"
         style={{ 'width': '300px', 'max-height': '300px' }}
       />
-      <h1>{country.name}</h1>
+      <h1>{country.name.common}</h1>
 
       <table className="table">
         <thead></thead>
@@ -31,15 +33,25 @@ export default function CountryDetails({ country, allCountries }) {
             <td>Borders</td>
             <td>
               <ul>
+              { borders.map(border=>(
+                <li>
+                  <Link to={`/${border.alpha3Code}`}>
+                    {border.name.common}
+                  </Link>
+                </li>))
+              }
+              
+              
+              {/* 
                 {country.borders.map(border => (
                   <li key={country.alpha3Code}>
-                    <Link to={`/${border}`+ `${country.alpha3Code}`}>
-                      {allCountries.filter(
+                    <Link to={`/${border}`}>
+                      {allCountries && allCountries.filter(
                         country => (country.alpha3Code === border)[0].name
                       )}
                     </Link>
                   </li>
-                ))}
+                ))} */}
               </ul>
             </td>
           </tr>

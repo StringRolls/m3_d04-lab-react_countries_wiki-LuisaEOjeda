@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import {Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import countriesDB from './countries.json';
 
@@ -21,15 +21,12 @@ function App() {
       <div className="container">
         <div className="row">
           <CountriesList countries={countriesDB} />
-
-          <Routes>
-          {countries.map((country) => (
-            <Route 
-            path={`/${country.alpha3Code}`} 
-            element={<CountryDetails country={country} allContires={countriesDB}/>} 
-            />
+          {countries && countries.map(country=> (
+            <Link  to={`/${country.alpha3Code}`}/>
           ))}
-        </Routes>
+ <Routes >
+   <Route path={"/:countryCode"}  element={ <CountryDetails countries={countriesDB}/> }/>
+ </Routes >
 
         </div>
       </div>
